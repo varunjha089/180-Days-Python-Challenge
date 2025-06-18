@@ -122,35 +122,6 @@ def export_pdf():
             messagebox.showerror("Error", str(e))
 
 
-# def plot_graph():
-#     if not export_data:
-#         messagebox.showerror("Error", "Please calculate EMI first.")
-#         return
-#     try:
-#         months = []
-#         principals = []
-#         interests = []
-#         for row in export_data:
-#             if isinstance(row[0], int) or (isinstance(row[0], str) and row[0].startswith("Month")):
-#                 try:
-#                     months.append(len(months) + 1)
-#                     principals.append(float(row[1]))
-#                     interests.append(float(row[2]))
-#                 except:
-#                     pass
-#         plt.figure(figsize=(10, 5))
-#         plt.plot(months, principals, label="Principal Paid")
-#         plt.plot(months, interests, label="Interest Paid")
-#         plt.title("Monthly Principal vs Interest Payment")
-#         plt.xlabel("Month")
-#         plt.ylabel("Amount")
-#         plt.legend()
-#         plt.grid(True)
-#         plt.tight_layout()
-#         plt.show()
-#     except Exception as e:
-#         messagebox.showerror("Error", str(e))
-
 def plot_graph():
     if not export_data:
         messagebox.showerror("Error", "Please calculate EMI first.")
@@ -159,25 +130,14 @@ def plot_graph():
         months = []
         principals = []
         interests = []
-        month_counter = 1
-
         for row in export_data:
-            try:
-                # Skip headers or non-data rows
-                if isinstance(row, list) and len(row) >= 3:
-                    principal = float(row[1])
-                    interest = float(row[2])
-                    principals.append(principal)
-                    interests.append(interest)
-                    months.append(month_counter)
-                    month_counter += 1
-            except:
-                continue  # skip non-numeric rows
-
-        if not months:
-            messagebox.showerror("Error", "No valid data to plot.")
-            return
-
+            if isinstance(row[0], int) or (isinstance(row[0], str) and row[0].startswith("Month")):
+                try:
+                    months.append(len(months) + 1)
+                    principals.append(float(row[1]))
+                    interests.append(float(row[2]))
+                except:
+                    pass
         plt.figure(figsize=(10, 5))
         plt.plot(months, principals, label="Principal Paid")
         plt.plot(months, interests, label="Interest Paid")
@@ -190,7 +150,6 @@ def plot_graph():
         plt.show()
     except Exception as e:
         messagebox.showerror("Error", str(e))
-
 
 
 # GUI Setup
